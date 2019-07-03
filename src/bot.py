@@ -64,9 +64,6 @@ async def stop(ctx):
     await ctx.voice_client.disconnect()
 
 
-botCommands = [screech, stop]
-
-
 @bot.command()
 async def help(ctx):
     """Lists all bot functions"""
