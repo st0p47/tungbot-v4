@@ -1,9 +1,11 @@
 from discord.ext import commands
 import discord
 import config
+from datetime import datetime
 
 prefix = config.prefix
 bot = commands.Bot(command_prefix=prefix)
+bot.remove_command('help')
 
 
 @bot.event
@@ -13,10 +15,22 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
-    print("The message's content was", message.content)
-
     await bot.process_commands(message)
 
+
+@bot.group()
+async def server(ctx):
+    pass
+
+
+@server.command()
+async def status(ctx):
+    pass
+
+
+@server.command()
+async def players():
+    pass
 
 @bot.command()
 async def screech(ctx):
@@ -48,5 +62,30 @@ async def stop(ctx):
 
     print("leaving voice channel")
     await ctx.voice_client.disconnect()
+
+
+botCommands = [screech, stop]
+
+
+@bot.command()
+async def help(ctx):
+    """Lists all bot functions"""
+
+    embed = discord.Embed(
+        title="Help",
+        description="All commands explained here!",
+        color=0x43efeb)
+
+    embed.set_author(name="tungbot",
+                     url="https://github.com/st0p47/tungbot-v4",
+                     icon_url="https://st0p47.github.io/tungbot-v4_pfp.png")
+
+    embed.set_footer(text="tungbot-v4 | " +
+                     datetime.now().strftime("%B %d, %Y, %H:%M:%S"))
+
+    for command in bot.commands:
+        embed.add_field(name=command.name, value=command.short_doc)
+
+    await ctx.send(embed=embed)
 
 bot.run(config.token)
