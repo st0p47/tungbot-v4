@@ -68,7 +68,8 @@ async def status(ctx):
     embed.set_thumbnail(
         url="https://gamepedia.cursecdn.com/minecraft_gamepedia/4/44/Grass_Block_Revision_6.png"
     )
-    embed.add_field(name="URL", value="{}:{}".format(config.server, data["port"]))
+    embed.add_field(name="URL", value="{}:{}".format(
+        config.server, data["port"]))
 
     if data["online"]:
         embed.add_field(name="MOTD", value=data["motd"]["raw"])
@@ -113,11 +114,12 @@ async def players(ctx):
 
         await ctx.send(embed=embed)
 
-        for player in list(data["players"]["list"]):
+        if data["players"].get("list") is not None:
+            for player in list(data["players"]["list"]):
             title = "Player"
             description = ""
             playerEmbed = standardEmbed(title, description)
-            
+
             playerEmbed.add_field(name="Player", value=player)
             playerEmbed.set_thumbnail(
                 url="https://minotar.net/avatar/{}/300.png".format(player)
@@ -187,10 +189,12 @@ async def help(ctx, group=""):
     # Super hacky because I got lazy
     if group == "server":
         for command in server.commands:
-            embed.add_field(name=command.name, value=command.short_doc, inline=False)
+            embed.add_field(name=command.name,
+                            value=command.short_doc, inline=False)
     else:
         for command in bot.commands:
-            embed.add_field(name=command.name, value=command.short_doc, inline=False)
+            embed.add_field(name=command.name,
+                            value=command.short_doc, inline=False)
 
     await ctx.send(embed=embed)
 
