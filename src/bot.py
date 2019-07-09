@@ -116,15 +116,15 @@ async def players(ctx):
 
         if data["players"].get("list") is not None:
             for player in list(data["players"]["list"]):
-            title = "Player"
-            description = ""
-            playerEmbed = standardEmbed(title, description)
+                title = "Player"
+                description = ""
+                playerEmbed = standardEmbed(title, description)
 
-            playerEmbed.add_field(name="Player", value=player)
-            playerEmbed.set_thumbnail(
-                url="https://minotar.net/avatar/{}/300.png".format(player)
-            )
-            await ctx.send(embed=playerEmbed)
+                playerEmbed.add_field(name="Player", value=player)
+                playerEmbed.set_thumbnail(
+                    url="https://minotar.net/avatar/{}/300.png".format(player)
+                )
+                await ctx.send(embed=playerEmbed)
 
 
 @bot.command()
