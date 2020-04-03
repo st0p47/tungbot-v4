@@ -72,9 +72,8 @@ async def status(ctx):
         config.server, data["port"]))
 
     if data["online"]:
-        embed.add_field(name="MOTD", value=data["motd"]["raw"])
+        embed.add_field(name="MOTD", value=data["motd"]["raw"][0])
         embed.add_field(name="Version", value=data["version"])
-        embed.add_field(name="Software", value=data["software"])
         embed.add_field(
             name="Capacity",
             value="{}/{}".format(
@@ -101,7 +100,8 @@ async def players(ctx):
     )
 
     if not data["online"]:
-        embed.add_field(name="Server Offline")
+        embed.add_field(name="Server Offline", value="sad!")
+        await ctx.send(embed=embed)
         return
     else:
         embed.add_field(
